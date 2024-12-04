@@ -5,6 +5,10 @@ from datetime import datetime
 
 ISTAT_CSV_URL = "http://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv"
 
+# Percorso della directory "database" basato sul file corrente
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_CSV_PATH = os.path.join(BASE_DIR, "database/comuni.csv")
+
 
 def get_remote_last_modified():
     """Recupera la data dell'ultima modifica del CSV remoto."""
@@ -23,7 +27,7 @@ def get_local_last_modified(local_path):
     return None
 
 
-def is_csv_updated(local_path="database/comuni.csv"):
+def is_csv_updated(local_path=DEFAULT_CSV_PATH):
     """Controlla se il file CSV locale è aggiornato rispetto alla versione remota."""
     try:
         remote_last_modified = get_remote_last_modified()
@@ -36,7 +40,7 @@ def is_csv_updated(local_path="database/comuni.csv"):
         return False
 
 
-def download_csv(local_path="database/comuni.csv"):
+def download_csv(local_path=DEFAULT_CSV_PATH):
     """Scarica il file CSV dell'ISTAT e lo salva localmente."""
     response = requests.get(ISTAT_CSV_URL)
     if response.status_code == 200:
@@ -49,11 +53,17 @@ def download_csv(local_path="database/comuni.csv"):
 
 
 def clean_column_names(columns):
-    """Pulisce e rinomina le colonne per semplificarne l'uso."""
-    return columns.str.strip().str.replace('\n', ' ').str.replace('  ', ' ').str.lower()
+    """Pulisce i nomi delle colonne per renderli coerenti."""
+    return (
+        columns
+        .str.strip()  # Rimuovi spazi iniziali e finali
+        .str.replace('\n', ' ', regex=False)  # Sostituisci newline con uno spazio
+        .str.replace(r'\s+', '_', regex=True)  # Sostituisci spazi multipli con _
+        .str.lower()  # Convertili in minuscolo
+    )
 
 
-def load_comuni_data(csv_file="database/comuni.csv"):
+def load_comuni_data(csv_file):
     """Carica i dati dei comuni dal file CSV."""
     if not is_csv_updated(csv_file):
         print("Il file CSV non è aggiornato. Download in corso...")
@@ -69,11 +79,11 @@ def load_comuni_data(csv_file="database/comuni.csv"):
 
     # Rinomina le colonne per semplicità
     data.rename(columns={
-        "denominazione in italiano": "denominazione_italiana",
-        "sigla automobilistica": "sigla_provincia",
-        "denominazione regione": "regione",
-        "denominazione dell'unità territoriale sovracomunale (valida a fini statistici)": "provincia",
-        "codice catastale del comune": "codice_catastale"
+        "denominazione_in_italiano": "denominazione_italiana",
+        "sigla_automobilistica": "sigla_provincia",
+        "denominazione_regione": "regione",
+        "denominazione_dell'unità_territoriale_sovracomunale_(valida_a_fini_statistici)": "provincia",
+        "codice_catastale_del_comune": "codice_catastale"
     }, inplace=True)
 
     return data
