@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="comuniitaliani",
-    version="0.2",
+    version="0.20.1",
     description="Libreria Python per ottenere informazioni sui comuni italiani aggiornate da file ISTAT",
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
