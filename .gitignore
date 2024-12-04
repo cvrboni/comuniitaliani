@@ -1,0 +1,21 @@
+# Escludi le directory e file generati da Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Escludi ambienti virtuali
+.venv/
+env/
+
+# Escludi file di build
+build/
+dist/
+*.egg-info/
+
+# Escludi file specifici di editor/IDE
+.vscode/
+.idea/
+*.log
+
+# File di sistema
+.DS_Store
