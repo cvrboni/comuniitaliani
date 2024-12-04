@@ -112,6 +112,6 @@ Questa libreria è distribuita sotto la licenza MIT. Consulta il file [LICENSE](
 ---
 
 ## **Link Utili**
-- [Repository GitHub](https://github.com/tuo-utente/comuniitaliani)
+- [Repository GitHub](https://github.com/cvrboni/comuniitaliani)
 - [PyPI Package](https://pypi.org/project/comuniitaliani)
 - [Dataset ISTAT](https://www.istat.it/it/archivio/6789)
