@@ -47,7 +47,6 @@ def download_csv(local_path=DEFAULT_CSV_PATH):
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         with open(local_path, 'wb') as file:
             file.write(response.content)
-        print(f"CSV scaricato correttamente: {local_path}")
     else:
         raise Exception("Errore durante il download del file CSV.")
 
