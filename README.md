@@ -6,6 +6,7 @@ Una libreria Python per ottenere informazioni sui comuni italiani, basata sui da
 ## **Funzionalità**
 - Cerca un comune per nome e ottieni informazioni dettagliate (es. codice catastale, sigla provincia, ecc.).
 - Ottieni una lista di comuni per provincia.
+- Cerca un comune per codice catastale.
 - Aggiornamento automatico dei dati con l'ultima versione disponibile sul sito dell'ISTAT.
 
 ---
@@ -36,12 +37,11 @@ print(info)
 **Output Esempio:**
 ```json
 {
-    "Nome": "Agliè",
-    "Sigla Provincia": "TO",
-    "Codice Catastale": "A074",
-    "Codice ISTAT Numerico": "1001",
-    "Regione": "Piemonte",
-    "Capoluogo": False
+    "nome": "Agliè",
+    "sigla_provincia": "TO",
+    "codice_catastale": "A074",
+    "provincia": "Torino",
+    "regione": "Piemonte"
 }
 ```
 
@@ -61,11 +61,35 @@ print(provincia_comuni[:5])  # Mostra i primi 5 comuni
 **Output Esempio:**
 ```json
 [
-    {"Nome": "Agliè", "Sigla Provincia": "TO", "Codice Catastale": "A074"},
-    {"Nome": "Airasca", "Sigla Provincia": "TO", "Codice Catastale": "A109"},
-    {"Nome": "Ala di Stura", "Sigla Provincia": "TO", "Codice Catastale": "A117"},
+    {"nome": "Agliè", "sigla_provincia": "TO", "codice_catastale": "A074"},
+    {"nome": "Airasca", "sigla_provincia": "TO", "codice_catastale": "A109"},
+    {"nome": "Ala di Stura", "sigla_provincia": "TO", "codice_catastale": "A117"},
     ...
 ]
+```
+
+---
+
+### **Cercare un comune per codice catastale**
+```python
+from comuniitaliani import Comuni
+
+comuni = Comuni()
+
+# Cerca un comune per codice catastale
+info = comuni.cerca_per_codice_catastale("A074")
+print(info)
+```
+
+**Output Esempio:**
+```json
+{
+    "nome": "Agliè",
+    "sigla_provincia": "TO",
+    "codice_catastale": "A074",
+    "provincia": "Torino",
+    "regione": "Piemonte"
+}
 ```
 
 ---
@@ -79,11 +103,6 @@ La libreria verifica automaticamente se il dataset ISTAT è aggiornato e lo scar
 Questa libreria utilizza:
 - **pandas**: per la gestione e manipolazione dei dati.
 - **requests**: per scaricare il dataset ISTAT.
-
-Puoi installarle con:
-```bash
-pip install pandas requests
-```
 
 ---
 
